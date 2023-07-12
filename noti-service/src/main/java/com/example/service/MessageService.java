@@ -5,6 +5,7 @@ import jakarta.mail.MessagingException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -14,7 +15,7 @@ public class MessageService {
     private NotiService notiService;
 
     @KafkaListener(id = "notificationGroup", topics = "notification")
-    public void listen(Message message) throws MessagingException {
+    public void listen(@Payload Message message) throws MessagingException {
         log.info("Received: " + message.getTo());
         notiService.sendNotiEmail(message);
     }
