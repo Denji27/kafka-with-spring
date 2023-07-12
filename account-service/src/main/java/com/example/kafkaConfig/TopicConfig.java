@@ -8,11 +8,7 @@ import org.springframework.context.annotation.Configuration;
 public class TopicConfig {
     @Bean
     public NewTopic notification(){
-        return new NewTopic("notification", 2, (short) 1);
-    }
-    @Bean
-    public NewTopic statistic(){
-        return new NewTopic("statistic", 1, (short) 1);
+        return new NewTopic("notification", 2, (short) 3);
     }
 
 }

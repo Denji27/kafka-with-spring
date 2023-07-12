@@ -2,7 +2,6 @@ package com.example.service.Impl;
 
 import com.example.model.Account;
 import com.example.model.Message;
-import com.example.model.Statistic;
 import com.example.repository.AccountRepo;
 import com.example.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,10 +22,6 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public Account createAccount(Account account) {
         accountRepo.save(account);
-        Statistic stat = Statistic.builder()
-                .message("Account " + account.getEmail() + " is created!!")
-                .createdDate(new Date())
-                .build();
         Message mess = Message.builder()
                 .to(account.getEmail())
                 .toName(account.getName())
@@ -34,7 +29,6 @@ public class AccountServiceImpl implements AccountService {
                 .content("Thanks for subscribing to our Kafka demo system!!")
                 .build();
         kafkaTemplate.send("notification", mess);
-        kafkaTemplate.send("statistic", stat);
         return account;
     }
 }
